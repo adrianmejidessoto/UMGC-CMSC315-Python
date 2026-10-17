@@ -65,8 +65,12 @@ class ChildClass(ParentClass):
         return f"Pickup Truck: {self.brand} {self.model} ({self.year})"
 
     # Student-created extension: calculate vehicle age
+
     def calculate_age(self, current_year):
+        if self.year > current_year:
+            return "Error: Vehicle year cannot be in the future."
         return current_year - self.year
+
 
 
 
@@ -171,6 +175,10 @@ def main():
 
     # Test the student-created extension
     print("Vehicle age:", truck.calculate_age(2026), "year(s)")
+
+    # Edge case test: a vehicle with a future manufacturing year
+    future_truck = ChildClass("Ford", "F-150", 2030, "Blue")
+    print("Future vehicle test:", future_truck.calculate_age(2026))
 
     # Demonstrate namespaces and object copying
     demonstrate_namespaces()
