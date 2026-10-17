@@ -24,8 +24,17 @@ from copy import copy, deepcopy
 #
 # Replace the pass statement with your implementation.
 
+
 class ParentClass:
-    pass
+    vehicle_type = "Vehicle"
+
+    def __init__(self, brand, model):
+        self.brand = brand
+        self.model = model
+
+    def display_info(self):
+        return f"Vehicle: {self.brand} {self.model}"
+
 
 
 # TODO 2:
@@ -40,8 +49,25 @@ class ParentClass:
 #
 # Replace the pass statement with your implementation.
 
+
 class ChildClass(ParentClass):
-    pass
+    vehicle_category = "Pickup Truck"
+
+    def __init__(self, brand, model, year, color):
+        super().__init__(brand, model)
+        self.year = year
+        self.color = color
+
+    def truck_details(self):
+        return f"Year: {self.year}, Color: {self.color}"
+
+    def display_info(self):
+        return f"Pickup Truck: {self.brand} {self.model} ({self.year})"
+
+    # Student-created extension: calculate vehicle age
+    def calculate_age(self, current_year):
+        return current_year - self.year
+
 
 
 # TODO 3:
@@ -57,7 +83,19 @@ class ChildClass(ParentClass):
 
 def demonstrate_namespaces():
     print("\n=== Namespace Demonstration ===")
-    print("TODO: Implement namespace demonstration")
+    truck1 = ChildClass("RAM", "1500", 2025, "Black")
+    truck2 = ChildClass("Ford", "F-150", 2024, "Blue")
+
+    print("Class variable:", ChildClass.vehicle_category)
+    print("Class variable through object:", truck1.vehicle_category)
+
+    truck1.owner = "Adrian"
+
+    print("Truck 1 namespace:", truck1.__dict__)
+    print("Truck 2 namespace:", truck2.__dict__)
+
+    print("Class namespace:", list(ChildClass.__dict__.keys()))
+
 
 
 # TODO 4:
@@ -73,7 +111,34 @@ def demonstrate_namespaces():
 
 def demonstrate_copying():
     print("\n=== Copy Demonstration ===")
-    print("TODO: Implement shallow copy and deep copy demonstration")
+    # Original object with nested mutable data
+    original = {
+        "vehicle": "RAM 1500",
+        "features": ["Bluetooth", "Navigation", "Backup Camera"]
+    }
+
+    # Shallow copy: shares the nested list with the original
+    shallow_copy = copy(original)
+
+    # Deep copy: creates an independent copy of the nested list
+    deep_copy = deepcopy(original)
+
+    print("Before modification:")
+    print("Original:", original)
+    print("Shallow copy:", shallow_copy)
+    print("Deep copy:", deep_copy)
+
+    # Modify the nested list in the original object
+    original["features"].append("Heated Seats")
+
+    print("\nAfter modification:")
+    print("Original:", original)
+    print("Shallow copy:", shallow_copy)
+    print("Deep copy:", deep_copy)
+
+    # The shallow copy reflects changes to shared nested objects.
+    # The deep copy preserves its independent nested objects.
+
 
 
 # TODO 5:
@@ -86,15 +151,31 @@ def demonstrate_copying():
 # - Call your namespace demonstration function.
 # - Call your copy demonstration function.
 
+
 def main():
     print("=== Unit 1 OOP Assignment ===")
 
-    print("\nTODO: Create and test your parent object")
+    # Create and test an object from the parent class
+    print("\n=== Parent Class Demonstration ===")
+    vehicle = ParentClass("Toyota", "Camry")
+    print(vehicle.display_info())
+    print("Vehicle type:", vehicle.vehicle_type)
 
-    print("\nTODO: Create and test your child object")
+    # Create and test an object from the child class
+    print("\n=== Child Class Demonstration ===")
+    truck = ChildClass("RAM", "1500", 2025, "Black")
+    print(truck.display_info())
+    print(truck.truck_details())
+    print("Vehicle type:", truck.vehicle_type)
+    print("Vehicle category:", truck.vehicle_category)
 
+    # Test the student-created extension
+    print("Vehicle age:", truck.calculate_age(2026), "year(s)")
+
+    # Demonstrate namespaces and object copying
     demonstrate_namespaces()
     demonstrate_copying()
+
 
 
 if __name__ == "__main__":
