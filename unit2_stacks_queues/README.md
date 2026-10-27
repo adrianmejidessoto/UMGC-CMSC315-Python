@@ -1,36 +1,31 @@
 # Unit 2 Discussion: Stacks and Queues
 
-## Overview
+## Overview and completed work
 
-This assignment explores two fundamental linear data structures:
+I implemented a list-backed Stack and a collections.deque-backed Queue. I completed all ten operation TODOs, retained every original TODO prompt, and replaced the placeholder demonstration output. I placed both demonstrations inside main so importing the module did not run the demonstrations.
 
-- Stack (LIFO)
-- Queue (FIFO)
+## Design and real-world scenarios
 
-## Learning Objectives
+I modeled text-editor undo history with a stack. push appended an action at the end of the list; pop removed that same end. This produced LIFO behavior because the latest edit was undone first. peek inspected the newest action without removing it.
 
-- Implement stack operations
-- Implement queue operations
-- Understand LIFO and FIFO behavior
-- Create edge cases
+I modeled support-desk tickets with a queue. enqueue appended a request at the back; dequeue used popleft to remove the oldest request. This produced FIFO behavior and preserved arrival order. front inspected the oldest ticket without removing it. I chose deque so removing the first ticket did not require shifting all remaining items.
 
-## Requirements
+## Empty structures and boundary cases
 
-Complete all TODO sections:
+I raised descriptive IndexError exceptions for pop and peek on an empty stack and dequeue and front on an empty queue. The demonstration caught each exception and printed an explanation, allowing execution to continue. I also removed the only item from each structure and verified that is_empty returned True. The structures accepted general Python values, including None; explicit exceptions kept an empty structure distinguishable from a stored None value.
 
-1. Implement stack operations.
-2. Implement queue operations.
-3. Demonstrate LIFO behavior.
-4. Demonstrate FIFO behavior.
-5. Create and test edge cases.
-6. Create a real-world scenario.
+## Verification
 
-## Discussion Board Reflection
+I ran the original starter and then the completed program. I checked four-item LIFO and FIFO order, non-removing inspection, all four empty-operation errors, single-item transitions, reuse after emptying, duplicate values, stored None values, and mixed additions and removals. The additional automated checks passed. I verified that all original TODO prompts remained present.
 
-After completing the programming assignment, add this reflection to your initial discussion post in LEO.
+## Time and memory analysis
 
-Your reflection should be approximately 150–200 words and address the following questions:
+I used O(n) storage for n stored references in each structure. Memory grew as items were added, with additional container capacity and object overhead. The objects referenced by the containers could require additional memory. Python lists could retain spare capacity after removals, so allocated memory did not necessarily decrease immediately. Stack push was amortized O(1); stack pop and peek were O(1). Queue enqueue, dequeue, and front were O(1). Neither structure imposed a fixed application capacity; available memory limited growth.
 
-1. What concepts or skills did you learn while completing this assignment?
-2. What challenges did you encounter, and how did you overcome them?
-3. Explain the differences between stacks and queues as this relates to real-world applications.
+## Running the program
+
+Run `python unit2_discussion.py` from this folder. Run `python verify_unit2.py` from the parent folder for the additional checks. No external packages were required.
+
+## Submission status
+
+The Python program and documentation were completed locally. GitHub publication and the discussion post remained to be completed using the student's repository link. Two peer replies also remained pending actual classmates' posts.
