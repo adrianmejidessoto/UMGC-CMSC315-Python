@@ -22,7 +22,10 @@ def insert_at(lst, index, value):
     - Use comments to explain how insertion performance may vary depending on
       where the insertion occurs.
     """
-    pass
+    # Elements at and after the index shift one position to the right.
+    # Beginning and middle insertions take O(n) time due to shifting.
+    # End insertion takes amortized O(1), but resizing can take O(n).
+    lst.insert(index, value)
 
 
 def delete_at(lst, index):
@@ -36,7 +39,11 @@ def delete_at(lst, index):
     - Return None if the index is invalid.
     - Add comments explaining why index validation and safe deletion are important.
     """
-    pass
+    # Validate the index to prevent errors and unintended deletions.
+    # Invalid indexes, including deletion from an empty list, return None.
+    if 0 <= index < len(lst):
+        return lst.pop(index)
+    return None
 
 
 def search_value(lst, value):
@@ -49,7 +56,12 @@ def search_value(lst, value):
     - Return -1 if the value is not found.
     - Add comments explaining why this is a linear search and why it scans sequentially.
     """
-    pass
+    # Scan sequentially because the list is not assumed to be sorted.
+    # Return the index of the first match; worst-case search takes O(n).
+    for index, item in enumerate(lst):
+        if item == value:
+            return index
+    return -1
 
 
 def main():
@@ -70,7 +82,22 @@ def main():
     # 5. Use comments to explain each step in the implementation.
 
     print("\n=== INSERTION TESTS ===")
-    print("TODO: Create a list and demonstrate insertions.")
+    # Start with a playlist containing three songs.
+    playlist = ["Song A", "Song B", "Song C"]
+    print("Original playlist:", playlist)
+
+    # Insert at the beginning, shifting all existing songs right.
+    insert_at(playlist, 0, "Opening Song")
+    print("After beginning insertion:", playlist)
+
+    # Insert at the middle, shifting later songs right.
+    middle = len(playlist) // 2
+    insert_at(playlist, middle, "Middle Song")
+    print("After middle insertion:", playlist)
+
+    # Insert at the end without shifting existing songs.
+    insert_at(playlist, len(playlist), "Closing Song")
+    print("After end insertion:", playlist)
 
     # ===============================
     # TODO (Student): DELETION TESTS
@@ -86,7 +113,21 @@ def main():
     # 4. Use comments to clearly explain what is happening in the output.
 
     print("\n=== DELETION TESTS ===")
-    print("TODO: Demonstrate deletions from multiple positions.")
+    # Remove the first song; later songs shift left.
+    removed = delete_at(playlist, 0)
+    print("Removed from beginning:", removed)
+    print("Updated playlist:", playlist)
+
+    # Remove the song at the current middle index.
+    middle = len(playlist) // 2
+    removed = delete_at(playlist, middle)
+    print("Removed from middle:", removed)
+    print("Updated playlist:", playlist)
+
+    # Remove the last song without shifting other songs.
+    removed = delete_at(playlist, len(playlist) - 1)
+    print("Removed from end:", removed)
+    print("Updated playlist:", playlist)
 
     # ===============================
     # TODO (Student): SEARCH TESTS
@@ -99,7 +140,13 @@ def main():
     # 4. Use comments to explain each step.
 
     print("\n=== SEARCH TESTS ===")
-    print("TODO: Demonstrate searching for values.")
+    # Search for a song that remains in the playlist.
+    index = search_value(playlist, "Song A")
+    print("Search for Song A (existing): index", index)
+
+    # A missing song returns -1 without changing the playlist.
+    index = search_value(playlist, "Missing Song")
+    print("Search for Missing Song (not found):", index)
 
     # ===============================
     # TODO (Student): EDGE CASES
@@ -115,7 +162,21 @@ def main():
     # - Use comments to explain each edge case.
 
     print("\n=== EDGE CASES ===")
-    print("TODO: Demonstrate at least two edge cases.")
+    # An index equal to the length is invalid for deletion.
+    removed = delete_at(playlist, len(playlist))
+    print("Invalid deletion returns:", removed)
+    print("Playlist remains unchanged:", playlist)
+
+    # Deleting from an empty playlist safely returns None.
+    empty_playlist = []
+    print("Delete from empty playlist:", delete_at(empty_playlist, 0))
+
+    # Searching an empty playlist returns -1.
+    print("Search empty playlist:", search_value(empty_playlist, "Song A"))
+
+    # Inserting at index 0 works even when the playlist is empty.
+    insert_at(empty_playlist, 0, "First Song")
+    print("Insert into empty playlist:", empty_playlist)
 
 
 
